@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">DangerZone</string>
+    <string name="mensaje_fab" translatable="false">Clic en el botón fab</string>
+    <string name="accion_mostrar">Mostrar Lugares</string>
+    <string name="accion_preferencias">Preferencias</string>
+    <string name="accion_acerca_de">Acerca de </string>
+    <string name="accion_salir">Salir</string>
+    <string name="action_settings">Ajustes</string>
+
+    <string name="comentario">Comentario</string>
+    <string name="nombre">Nombre:</string>
+    <string name="identificar_el_lugar">Algo que identifique el lugar</string>
+    <string name="tipo_lugar">Tipo:</string>
+    <string name="direccion">Dirección:</string>
+    <string name="direccion_lugar">Dirección del lugar:</string>
+    <string name="telefono">Teléfono:</string>
+    <string name="tel_contacto">Teléfono para contactar</string>
+    <string name="url" translatable="false">Url:</string>
+    <string name="web">Página web</string>
+    <string name="notas">Introduce tus notas</string>
 </resources>

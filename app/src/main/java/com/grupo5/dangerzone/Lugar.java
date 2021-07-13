@@ -15,8 +15,27 @@ public class Lugar {
     private TipoLugar tipo;
 
     //CONSTRUCTOR
+    public Lugar() {
+        fecha = System.currentTimeMillis();
+        posicion = new GeoPunto(0.0,0.0);
+        tipo = TipoLugar.OTROS;
+    }
+
     public Lugar (String nombre, String direccion, double longitud, double latitud,
                   TipoLugar tipo, int telefono, String url, String comentario, int valoracion) {
+        fecha = System.currentTimeMillis();
+        posicion = new GeoPunto(longitud, latitud);
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.url = url;
+        this.comentario = comentario;
+        this.valoracion = valoracion;
+        this.tipo = tipo;
+    }
+
+    public Lugar (String nombre, String direccion, double longitud, double latitud,
+                  TipoLugar tipo, int telefono, String url, String comentario, float valoracion) {
         fecha = System.currentTimeMillis();
         posicion = new GeoPunto(longitud, latitud);
         this.nombre = nombre;

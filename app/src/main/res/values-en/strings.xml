@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DangerZone</string>
+    <string name="accion_mostrar">Show places</string>
+    <string name="accion_preferencias">Preferences</string>
+    <string name="accion_acerca_de">About</string>
+    <string name="accion_salir">Exit</string>
+    <string name="action_settings">Settings</string>
+    <string name="comentario">Notes</string>
+    <string name="nombre">Name:</string>
+    <string name="identificar_el_lugar">Something about place</string>
+    <string name="tipo_lugar">Type:</string>
+    <string name="direccion">Address:</string>
+    <string name="direccion_lugar">Address</string>
+    <string name="telefono">Telephone:</string>
+    <string name="tel_contacto">Contact number</string>
+    <string name="web">Web page</string>
+    <string name="notas">Input your notes</string>
+</resources>

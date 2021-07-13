@@ -16,4 +16,6 @@
     <string name="tel_contacto">Contact number</string>
     <string name="web">Web page</string>
     <string name="notas">Input your notes</string>
+    <string name="positive_button">Ok</string>
+    <string name="negative_button">Cancel</string>
 </resources>

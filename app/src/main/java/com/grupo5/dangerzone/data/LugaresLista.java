@@ -1,9 +1,12 @@
-package com.grupo5.dangerzone;
+package com.grupo5.dangerzone.data;
+
+import com.grupo5.dangerzone.model.Lugar;
+import com.grupo5.dangerzone.model.TipoLugar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LugaresLista implements RepositorioLugares{
+public class LugaresLista implements RepositorioLugares {
 
     protected List<Lugar> listaLugares;
 

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.grupo5.dangerzone.MainActivity">
+    tools:context="com.grupo5.dangerzone.presentation.MainActivity">
     <item android:id="@+id/menu_usuario"
         android:title="Perfil de Usuario"
         android:icon="@android:drawable/ic_menu_info_details"

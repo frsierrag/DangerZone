@@ -1,4 +1,6 @@
-package com.grupo5.dangerzone;
+package com.grupo5.dangerzone.data;
+
+import com.grupo5.dangerzone.model.Lugar;
 
 public interface RepositorioLugares {
 

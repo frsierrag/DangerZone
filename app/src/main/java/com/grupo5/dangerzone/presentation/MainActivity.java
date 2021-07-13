@@ -1,5 +1,6 @@
-package com.grupo5.dangerzone;
+package com.grupo5.dangerzone.presentation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,13 +8,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.grupo5.dangerzone.Aplicacion;
+import com.grupo5.dangerzone.R;
+import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.use_cases.CasosUsoActividades;
+import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
 public class MainActivity extends AppCompatActivity {
 /*
@@ -36,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 */
 
     private Button btnSalir;
+    private RepositorioLugares lugares;
+    private CasosUsoLugar usoLugar;
+    private CasosUsoActividades usoActividades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        lugares = ((Aplicacion) getApplication()).lugares;
+        usoLugar = new CasosUsoLugar(this,lugares);
 
         // Barra de acciones
         Toolbar toolbar = findViewById(R.id.toolbar_Main);
@@ -87,10 +100,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.acercaDe) {
-            lanzarAcercade(null);
+            usoActividades.lanzarAcercaDe();
             return true;
         }
         if (id == R.id.menu_buscar) {
+            lanzarVistaLugar(null);
             Log.d("Tag main","clic a la opcion buscar");
             return true;
         } if (id == R.id.menu_usuario) {
@@ -103,9 +117,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Abrir acerca de
-    public void lanzarAcercade(View view){
-        Intent abrir = new Intent(this,AcercaDeActivity.class);
+    public void lanzarAcercade(View view) {
+        Intent abrir = new Intent(this, AcercaDeActivity.class);
         startActivity(abrir);
+    }
+
+    // Abrir vista lugar
+    public void lanzarVistaLugar(View view) {
+        final EditText entrada = new EditText(this);
+        entrada.setText("0");
+        new AlertDialog.Builder(this)
+                .setTitle("Selección de lugar")
+                .setMessage("indica su id:")
+                .setView(entrada)
+                .setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        int id = Integer.parseInt(entrada.getText().toString());
+                        usoLugar.mostrar(id);
+                    }
+                })
+                .setNegativeButton(R.string.negative_button, null)
+                .show();
     }
 
 }

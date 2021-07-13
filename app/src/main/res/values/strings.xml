@@ -18,4 +18,7 @@
     <string name="url" translatable="false">Url:</string>
     <string name="web">Página web</string>
     <string name="notas">Introduce tus notas</string>
+
+    <string name="positive_button">Ok</string>
+    <string name="negative_button">Cancelar</string>
 </resources>

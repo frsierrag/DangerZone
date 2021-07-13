@@ -1,7 +1,9 @@
-package com.grupo5.dangerzone;
+package com.grupo5.dangerzone.presentation;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.grupo5.dangerzone.R;
 
 public class AcercaDeActivity extends Activity {
 

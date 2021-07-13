@@ -1,4 +1,4 @@
-package com.grupo5.dangerzone;
+package com.grupo5.dangerzone.model;
 
 import java.util.Objects;
 

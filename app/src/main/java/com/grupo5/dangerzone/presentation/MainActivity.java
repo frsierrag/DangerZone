@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private RepositorioLugares lugares;
     private CasosUsoLugar usoLugar;
     private CasosUsoActividades usoActividades;
+    static final int RESULTADO_PREFERENCIAS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
         lugares = ((Aplicacion) getApplication()).lugares;
         usoLugar = new CasosUsoLugar(this,lugares);
+        usoActividades = new CasosUsoActividades(this);
 
         // Barra de acciones
         Toolbar toolbar = findViewById(R.id.toolbar_Main);
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.ajustes) {
-            Log.d("Tag en Main","Clic en la opcion ajustes");
+            usoActividades.lanzarPreferencias(RESULTADO_PREFERENCIAS);
             return true;
         }
         if (id == R.id.acercaDe) {
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.menu_buscar) {
             lanzarVistaLugar(null);
-            Log.d("Tag main","clic a la opcion buscar");
             return true;
         } if (id == R.id.menu_usuario) {
             return true;

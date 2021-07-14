@@ -24,7 +24,18 @@
             android:label="@string/accion_acerca_de"
             android:theme="@style/Theme.AppCompat.Light.Dialog">
         </activity>
-        <activity android:name=".presentation.VistaLugarActivity"
+        <activity
+            android:name=".presentation.EdicionLugarActivity"
+            android:label="Edición lugar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".presentation.PreferenciasActivity"
+            android:label="Preferencias Mis Lugares"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".presentation.VistaLugarActivity"
             android:label="Vista Lugar"
             android:screenOrientation="portrait">
         </activity>

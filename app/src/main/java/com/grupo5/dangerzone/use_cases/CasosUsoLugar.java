@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.grupo5.dangerzone.R;
 import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.model.Lugar;
+import com.grupo5.dangerzone.presentation.EdicionLugarActivity;
 import com.grupo5.dangerzone.presentation.VistaLugarActivity;
 
 public class CasosUsoLugar {
@@ -38,5 +40,17 @@ public class CasosUsoLugar {
                     }})
                 .setNegativeButton(R.string.negative_button, null)
                 .show();
+    }
+
+    // Editar
+    public void editar(int pos, int codigoSolicitud) {
+        Intent intent_ed_lugar = new Intent(actividad, EdicionLugarActivity.class);
+        intent_ed_lugar.putExtra("pos",pos);
+        actividad.startActivityForResult(intent_ed_lugar,codigoSolicitud);
+    }
+
+    // Guardar
+    public void guardar(int id, Lugar nuevoLugar) {
+        lugares.actualiza(id,nuevoLugar);
     }
 }

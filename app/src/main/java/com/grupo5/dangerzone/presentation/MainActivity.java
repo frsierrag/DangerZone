@@ -7,12 +7,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,23 +44,22 @@ public class MainActivity extends AppCompatActivity {
     }
 */
 
-    private Button btnSalir;
     private RepositorioLugares lugares;
     private CasosUsoLugar usoLugar;
     private CasosUsoActividades usoActividades;
+    private RecyclerView recyclerView;
+    public AdaptadorLugares adaptador;
     static final int RESULTADO_PREFERENCIAS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnSalir = findViewById(R.id.button04);
-        btnSalir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        adaptador = ((Aplicacion) getApplication()).adaptador;
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adaptador);
         lugares = ((Aplicacion) getApplication()).lugares;
         usoLugar = new CasosUsoLugar(this,lugares);
         usoActividades = new CasosUsoActividades(this);

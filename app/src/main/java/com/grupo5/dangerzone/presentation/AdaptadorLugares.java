@@ -17,6 +17,7 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
 
     // Lista de lugares a mostrar
     protected RepositorioLugares lugares;
+    protected View.OnClickListener onClickListener;
 
     // El constructor de la clase
     public AdaptadorLugares(RepositorioLugares lugares) { this.lugares = lugares; }
@@ -60,6 +61,7 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
         // Se infla la vista desde el xml
         View laVIsta_un_elemento = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.elemento_lista, parent, false);
+        laVIsta_un_elemento.setOnClickListener(onClickListener);
         return new ViewHolder(laVIsta_un_elemento);
     }
 
@@ -71,4 +73,9 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
 
     @Override
     public int getItemCount() { return lugares.tamaño(); }
+
+    // Set de onClick
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 }

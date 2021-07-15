@@ -25,24 +25,6 @@ import com.grupo5.dangerzone.use_cases.CasosUsoActividades;
 import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
 public class MainActivity extends AppCompatActivity {
-/*
-    TextView mensaje;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Lugar lugar = new Lugar("UIS","Clle 9#27",7.1377,-73.121,
-                TipoLugar.EDUCACION, 6344000, "https://www.uis.edu.co/",
-                "Una de las mejores universidades de Colombia", 5);
-        mensaje = findViewById(R.id.txt_mensaje);
-        mensaje.setText(lugar.toString());
-        RepositorioLugares lugares = new LugaresLista();
-        for (int i=0; i<lugares.tamaño(); i++){
-            System.out.println(lugares.elemento(i).toString());
-        }
-        Log.d("Tag in msg", "Mensaje de prueba por el logcat: " + lugar.toString());
-    }
-*/
 
     private RepositorioLugares lugares;
     private CasosUsoLugar usoLugar;
@@ -80,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
         // lugar.toString();
         Log.d("Tag en Main","Mensaje prueba por el logcat");
+
+        adaptador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = recyclerView.getChildAdapterPosition(v);
+                usoLugar.mostrar(position);
+            }
+        });
     }
 
     // Mostrar menu

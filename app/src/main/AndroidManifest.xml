@@ -4,9 +4,9 @@
     <application
         android:name=".Aplicacion"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_app_foreground"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DangerZone">
         <activity
@@ -24,7 +24,18 @@
             android:label="@string/accion_acerca_de"
             android:theme="@style/Theme.AppCompat.Light.Dialog">
         </activity>
-        <activity android:name=".presentation.VistaLugarActivity"
+        <activity
+            android:name=".presentation.EdicionLugarActivity"
+            android:label="Edición lugar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".presentation.PreferenciasActivity"
+            android:label="Preferencias Mis Lugares"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".presentation.VistaLugarActivity"
             android:label="Vista Lugar"
             android:screenOrientation="portrait">
         </activity>

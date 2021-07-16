@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
 import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.model.GeoPunto;
 import com.grupo5.dangerzone.model.Lugar;
 
 public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.ViewHolder> {
@@ -24,12 +26,15 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
 
     //Creamos nuestro ViewHolder, con los tipos de elementos a modificar
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView nombre, direccion;
-        public ImageView foto; public RatingBar valoracion; public ViewHolder(View itemView) {
+        public TextView nombre, direccion, distancia;
+        public ImageView foto;
+        public RatingBar valoracion;
+        public ViewHolder(View itemView) {
             super(itemView); nombre = itemView.findViewById(R.id.nombre);
             direccion = itemView.findViewById(R.id.direccion);
             foto = itemView.findViewById(R.id.foto);
             valoracion= itemView.findViewById(R.id.valoracion);
+            distancia = itemView.findViewById(R.id.distancia);
         }
 
         // Personalizamos un ViewHolder a partir de un lugar
@@ -51,6 +56,17 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
             foto.setImageResource(id);
             foto.setScaleType(ImageView.ScaleType.FIT_END);
             valoracion.setRating(lugar.getValoracion());
+            GeoPunto pos=((Aplicacion) itemView.getContext().getApplicationContext()).posicionActual;
+            if (pos.equals(GeoPunto.SIN_POSICION) || lugar.getPosicion().equals(GeoPunto.SIN_POSICION)) {
+                distancia.setText("... Km");
+            } else {
+                int d=(int) pos.distancia(lugar.getPosicion());
+                if (d < 2000) {
+                    distancia.setText(d + " m");
+                }else {
+                    distancia.setText(d / 1000 + " Km");
+                }
+            }
         }
     }
 

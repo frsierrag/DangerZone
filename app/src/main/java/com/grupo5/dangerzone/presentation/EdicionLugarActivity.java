@@ -1,11 +1,13 @@
 package com.grupo5.dangerzone.presentation;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +31,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
     private EditText telefono;
     private EditText url;
     private EditText comentario;
+    private Toast msnToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,9 +79,16 @@ public class EdicionLugarActivity extends AppCompatActivity {
                 lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
                 lugar.setUrl(url.getText().toString());
                 lugar.setComentario(comentario.getText().toString());
-                usoLugar.guardar(pos, lugar); finish();
+                msnToast = Toast.makeText(getApplicationContext(),"Cambios guardados exitosamente",Toast.LENGTH_LONG);
+                msnToast.setGravity(Gravity.CENTER,0,0);
+                msnToast.show();
+                usoLugar.guardar(pos, lugar);
+                finish();
                 return true;
             case R.id.accion_cancelar:
+                msnToast = Toast.makeText(getApplicationContext(),"Canceló la edición no hay cambios",Toast.LENGTH_LONG);
+                msnToast.setGravity(Gravity.CENTER,0,0);
+                msnToast.show();
                 finish();
                 return true;
             default:

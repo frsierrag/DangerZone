@@ -129,6 +129,10 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int id = Integer.parseInt(entrada.getText().toString());
+                        if(id > lugares.tamaño()) {
+                            Log.d("Id lugares", "Ha ingresado un Id superior, se mostrará el último objeto");
+                            usoLugar.mostrar(lugares.tamaño() - 1);
+                        }
                         usoLugar.mostrar(id);
                     }
                 })

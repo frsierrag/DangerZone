@@ -91,8 +91,9 @@ public class CasosUsoLugar {
     public final void verMapa(Lugar lugar) {
         double lat = lugar.getPosicion().getLatitud();
         double lon = lugar.getPosicion().getLongitud();
-        Uri uri = lugar.getPosicion() != GeoPunto.SIN_POSICION ? Uri.parse("geo:0,0?q="+Uri.encode(lugar.getDireccion())) :
-                Uri.parse("geo:" + lon + ',' + lat+"z=18");
+        Uri uri = lugar.getPosicion() != GeoPunto.SIN_POSICION ?
+                Uri.parse("geo:0,0?q="+Uri.encode(lugar.getDireccion())) :
+                Uri.parse("geo:" + lat + ',' + lon+"?z=18&q="+Uri.encode(lugar.getDireccion()));
         actividad.startActivity(new Intent("android.intent.action.VIEW", uri));
     }
 

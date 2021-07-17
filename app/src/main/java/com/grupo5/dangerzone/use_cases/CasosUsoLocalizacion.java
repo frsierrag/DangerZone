@@ -37,12 +37,28 @@ public class CasosUsoLocalizacion implements LocationListener {
         manejadorLoc = (LocationManager) actividad.getSystemService( LOCATION_SERVICE);
         posicionActual = ((Aplicacion) actividad.getApplication()).posicionActual;
         adaptador = ((Aplicacion) actividad.getApplication()).adaptador;
-        //ultimaLocalizazion();
+        ultimaLocalizazion();
     }
 
     public boolean hayPermisoLocalizacion() {
         return (ActivityCompat.checkSelfPermission(actividad,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @SuppressLint("MissingPermission")
+    void ultimaLocalizazion() {
+        if (hayPermisoLocalizacion()) {
+            if (manejadorLoc.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                actualizaMejorLocaliz(manejadorLoc.getLastKnownLocation( LocationManager.GPS_PROVIDER));
+            }
+            if (manejadorLoc.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                actualizaMejorLocaliz(manejadorLoc.getLastKnownLocation( LocationManager.NETWORK_PROVIDER));
+            }
+        } else {
+            solicitarPermiso(Manifest.permission.ACCESS_FINE_LOCATION,
+                    "Sin el permiso localización no puedo mostrar la distancia a los lugares.",
+                    codigoPermiso, actividad);
+        }
     }
 
     public static void solicitarPermiso(final String permiso, String justificacion,
@@ -63,7 +79,7 @@ public class CasosUsoLocalizacion implements LocationListener {
     }
 
     public void permisoConcedido() {
-        //ultimaLocalizazion();
+        ultimaLocalizazion();
         activarProveedores();
         adaptador.notifyDataSetChanged();
     }
@@ -88,7 +104,7 @@ public class CasosUsoLocalizacion implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "Nueva localización: "+location);
+        Log.d(TAG, "Nueva localización: "+ location);
         actualizaMejorLocaliz(location); adaptador.notifyDataSetChanged();
     }
 
@@ -100,18 +116,18 @@ public class CasosUsoLocalizacion implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d(TAG, "Se habilita: "+provider);
+        Log.d(TAG, "Se habilita: "+ provider);
         activarProveedores();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d(TAG, "Se deshabilita: "+provider);
+        Log.d(TAG, "Se deshabilita: "+ provider);
         activarProveedores();
     }
 
     private void actualizaMejorLocaliz(Location localiz) {
-        if (localiz != null && (mejorLoc == null || localiz.getAccuracy() < 2*mejorLoc.getAccuracy() ||
+        if (localiz != null && (mejorLoc == null || localiz.getAccuracy() < 2 * mejorLoc.getAccuracy() ||
                 localiz.getTime() - mejorLoc.getTime() > DOS_MINUTOS)) {
             Log.d(TAG, "Nueva mejor localización");
             mejorLoc = localiz;

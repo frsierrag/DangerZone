@@ -2,6 +2,7 @@ package com.grupo5.dangerzone.presentation;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
 import com.grupo5.dangerzone.data.RepositorioLugares;
 import com.grupo5.dangerzone.use_cases.CasosUsoActividades;
+import com.grupo5.dangerzone.use_cases.CasosUsoLocalizacion;
 import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     public AdaptadorLugares adaptador;
     static final int RESULTADO_PREFERENCIAS = 0;
+    private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
+    private CasosUsoLocalizacion usoLocalizacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         lugares = ((Aplicacion) getApplication()).lugares;
         usoLugar = new CasosUsoLugar(this,lugares);
         usoActividades = new CasosUsoActividades(this);
+        usoLocalizacion = new CasosUsoLocalizacion(this,SOLICITUD_PERMISO_LOCALIZACION);
 
         // Barra de acciones
         Toolbar toolbar = findViewById(R.id.toolbar_Main);
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     // Abrir vista lugar
     public void lanzarVistaLugar(View view) {
         final EditText entrada = new EditText(this);
-        entrada.setText("0");
+        entrada.setText("2");
         new AlertDialog.Builder(this)
                 .setTitle("Selección de lugar")
                 .setMessage("indica su id:")
@@ -124,11 +129,37 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int id = Integer.parseInt(entrada.getText().toString());
-                        usoLugar.mostrar(id);
+                        if(id > lugares.tamaño()) {
+                            Log.d("Id lugares", "Ha ingresado un Id superior, se mostrará el último objeto");
+                            usoLugar.mostrar(lugares.tamaño() - 1);
+                        } else usoLugar.mostrar(id);
                     }
                 })
                 .setNegativeButton(R.string.negative_button, null)
                 .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == SOLICITUD_PERMISO_LOCALIZACION &&
+                grantResults.length==1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            usoLocalizacion.permisoConcedido();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("tag MA", "onresume main ");
+        usoLocalizacion.activar();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("tag MA", "onpause main ");
+        usoLocalizacion.desactivar();
     }
 
 }

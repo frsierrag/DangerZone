@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.grupo5.dangerzone">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:name=".Aplicacion"
         android:allowBackup="true"
@@ -39,5 +42,14 @@
             android:label="Vista Lugar"
             android:screenOrientation="portrait">
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="grupo5.DangerZone.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 </manifest>

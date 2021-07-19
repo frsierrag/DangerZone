@@ -41,7 +41,8 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
         public void personaliza(Lugar lugar) {
             nombre.setText(lugar.getNombre());
             direccion.setText(lugar.getDireccion());
-            int id = R.drawable.otros; switch(lugar.getTipo()) {
+            int id = R.drawable.otros;
+            switch(lugar.getTipo()) {
                 case RESTAURANTE: id = R.drawable.restaurante; break;
                 case BAR: id = R.drawable.bar; break;
                 case COPAS: id = R.drawable.copas; break;

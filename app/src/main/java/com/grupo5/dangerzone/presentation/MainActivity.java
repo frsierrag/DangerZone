@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     // Abrir vista lugar
     public void lanzarVistaLugar(View view) {
         final EditText entrada = new EditText(this);
-        entrada.setText("0");
+        entrada.setText("2");
         new AlertDialog.Builder(this)
                 .setTitle("Selección de lugar")
                 .setMessage("indica su id:")
@@ -132,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         if(id > lugares.tamaño()) {
                             Log.d("Id lugares", "Ha ingresado un Id superior, se mostrará el último objeto");
                             usoLugar.mostrar(lugares.tamaño() - 1);
-                        }
-                        usoLugar.mostrar(id);
+                        } else usoLugar.mostrar(id);
                     }
                 })
                 .setNegativeButton(R.string.negative_button, null)

@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.menu_mapa) {
+            usoActividades.lanzarMapa();
             return true;
         }
         return super.onOptionsItemSelected(item);

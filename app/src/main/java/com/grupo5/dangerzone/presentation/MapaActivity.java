@@ -19,20 +19,21 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
 import com.grupo5.dangerzone.model.GeoPunto;
 import com.grupo5.dangerzone.model.Lugar;
 
 public class MapaActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mapa;
-    private RepositorioLugares lugares;
+    private AdaptadorLugaresBD adaptador;
+    // private RepositorioLugares lugares;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapa);
-        lugares = ((Aplicacion) getApplication()).lugares;
+        adaptador = ((Aplicacion)getApplication()).adaptador;
+        // lugares = ((Aplicacion) getApplication()).lugares;
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
     }
@@ -46,12 +47,17 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
             mapa.getUiSettings().setZoomControlsEnabled(true);
             mapa.getUiSettings().setCompassEnabled(true);
         }
-        if (lugares.tamaño() > 0) {
-            GeoPunto p = lugares.elemento(0).getPosicion();
+        // if (lugares.tamaño() > 0) {
+        if (adaptador.getItemCount() > 0) {
+            // GeoPunto p = lugares.elemento(0).getPosicion();
+            // mapa.moveCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(p.getLatitud(), p.getLongitud()), 12));
+            GeoPunto p = adaptador.lugarPosicion(0).getPosicion();
             mapa.moveCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(p.getLatitud(), p.getLongitud()), 12));
         }
-        for (int n = 0; n<lugares.tamaño(); n++) {
-            Lugar lugar = lugares.elemento(n);
+        // for (int n = 0; n<lugares.tamaño(); n++) {
+        //    Lugar lugar = lugares.elemento(n);
+        for (int n=0; n<adaptador.getItemCount(); n++) {
+            Lugar lugar = adaptador.lugarPosicion(n);
             GeoPunto p = lugar.getPosicion();
             if (p != null && p.getLatitud() != 0) {
                 Bitmap iGrande = BitmapFactory.decodeResource( getResources(), lugar.getTipo().getRecurso());
@@ -68,8 +74,10 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        for (int pos=0; pos<lugares.tamaño(); pos++) {
-            if (lugares.elemento(pos).getNombre().equals(marker.getTitle())) {
+        // for (int pos=0; pos<lugares.tamaño(); pos++) {
+        for (int pos=0; pos<adaptador.getItemCount(); pos++) {
+            if (adaptador.lugarPosicion(pos).getNombre().equals(marker.getTitle())) {
+            // if (lugares.elemento(pos).getNombre().equals(marker.getTitle())) {
                 Intent intent = new Intent(this, VistaLugarActivity.class);
                 intent.putExtra("pos", pos); startActivity(intent);
                 break;

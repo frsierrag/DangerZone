@@ -18,9 +18,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.model.GeoPunto;
 import com.grupo5.dangerzone.model.Lugar;
+import com.grupo5.dangerzone.presentation.AdaptadorLugaresBD;
 import com.grupo5.dangerzone.presentation.EdicionLugarActivity;
 import com.grupo5.dangerzone.presentation.VistaLugarActivity;
 
@@ -33,12 +34,19 @@ import java.net.URL;
 public class CasosUsoLugar {
 
     private Activity actividad;
-    private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
+    // private RepositorioLugares lugares;
 
     // Constructor de la clase
-    public CasosUsoLugar(Activity actividad, RepositorioLugares lugares) {
+    /* public CasosUsoLugar(Activity actividad, RepositorioLugares lugares) {
         this.actividad = actividad;
         this.lugares = lugares;
+    } */
+    public CasosUsoLugar(Activity actividad, LugaresBD lugares, AdaptadorLugaresBD adaptador) {
+        this.actividad = actividad;
+        this.lugares = lugares;
+        this.adaptador = adaptador;
     }
 
     // Operaciones básicas

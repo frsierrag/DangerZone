@@ -13,14 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.model.Lugar;
 import com.grupo5.dangerzone.model.TipoLugar;
 import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
 public class EdicionLugarActivity extends AppCompatActivity {
 
-    private RepositorioLugares lugares;
+    // private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
     private Lugar lugar;
@@ -40,8 +42,10 @@ public class EdicionLugarActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         pos = extras.getInt("pos", 0);
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares);
-        lugar = lugares.elemento(pos);
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        // lugar = lugares.elemento(pos);
+        adaptador = ((Aplicacion) getApplication()).adaptador;
+        lugar = adaptador.lugarPosicion(pos);
         actualizaVistas();
     }
 

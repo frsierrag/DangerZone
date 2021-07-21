@@ -21,18 +21,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.use_cases.CasosUsoActividades;
 import com.grupo5.dangerzone.use_cases.CasosUsoLocalizacion;
 import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RepositorioLugares lugares;
+    // private RepositorioLugares lugares;
+    // public AdaptadorLugares adaptador;
+    private AdaptadorLugaresBD adaptador;
+    private LugaresBD lugares;
     private CasosUsoLugar usoLugar;
     private CasosUsoActividades usoActividades;
     private RecyclerView recyclerView;
-    public AdaptadorLugares adaptador;
     static final int RESULTADO_PREFERENCIAS = 0;
     private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
     private CasosUsoLocalizacion usoLocalizacion;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adaptador);
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this,lugares);
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
         usoActividades = new CasosUsoActividades(this);
         usoLocalizacion = new CasosUsoLocalizacion(this,SOLICITUD_PERMISO_LOCALIZACION);
 
@@ -71,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         adaptador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = recyclerView.getChildAdapterPosition(v);
+                // int position = recyclerView.getChildAdapterPosition(v);
+                int position = (Integer) v.getTag();
+                Log.d("Posicion onCreate","Posicion adaptador: " + position);
                 usoLugar.mostrar(position);
             }
         });
@@ -130,9 +134,10 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int id = Integer.parseInt(entrada.getText().toString());
-                        if(id > lugares.tamaño()) {
+                        // if(id > lugares.tamaño()) {
+                        if(id > adaptador.getItemCount()) {
                             Log.d("Id lugares", "Ha ingresado un Id superior, se mostrará el último objeto");
-                            usoLugar.mostrar(lugares.tamaño() - 1);
+                            usoLugar.mostrar(adaptador.getItemCount() - 1);
                         } else usoLugar.mostrar(id);
                     }
                 })
@@ -163,4 +168,11 @@ public class MainActivity extends AppCompatActivity {
         usoLocalizacion.desactivar();
     }
 
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULTADO_PREFERENCIAS) {
+            adaptador.setCursor(lugares.extraeCursor());
+            adaptador.notifyDataSetChanged();
+        }
+    }
 }

@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.model.Lugar;
 import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
@@ -25,7 +25,9 @@ import java.util.Date;
 
 public class VistaLugarActivity extends AppCompatActivity {
 
-    private RepositorioLugares lugares;
+    // private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
     private Lugar lugar;
@@ -48,8 +50,10 @@ public class VistaLugarActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         pos = extras.getInt("pos", 0);
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares);
-        lugar = lugares.elemento(pos);
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        adaptador = ((Aplicacion) getApplication()).adaptador;
+        lugar = adaptador.lugarPosicion(pos);
+        // lugar = lugares.elemento(pos);
         foto = findViewById(R.id.foto);
         galeria = findViewById(R.id.galeria);
         camara = findViewById(R.id.camara);
@@ -162,7 +166,8 @@ public class VistaLugarActivity extends AppCompatActivity {
                 usoLugar.editar(pos,RESULTADO_EDITAR);
                 return true;
             case R.id.accion_borrar:
-                usoLugar.borrar(pos);
+                int id = adaptador.idPosicion(pos);
+                usoLugar.borrar(id);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

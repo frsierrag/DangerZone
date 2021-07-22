@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".presentation.PreferenciasActivity"
-            android:label="Preferencias Mis Lugares"
+            android:label="Preferencias DangerZone"
             android:screenOrientation="portrait">
         </activity>
         <activity

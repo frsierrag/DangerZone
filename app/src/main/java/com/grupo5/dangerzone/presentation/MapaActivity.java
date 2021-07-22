@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -40,7 +41,8 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapa = googleMap; mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mapa = googleMap;
+        mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             mapa.setMyLocationEnabled(true);
@@ -50,7 +52,6 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
         // if (lugares.tamaño() > 0) {
         if (adaptador.getItemCount() > 0) {
             // GeoPunto p = lugares.elemento(0).getPosicion();
-            // mapa.moveCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(p.getLatitud(), p.getLongitud()), 12));
             GeoPunto p = adaptador.lugarPosicion(0).getPosicion();
             mapa.moveCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(p.getLatitud(), p.getLongitud()), 12));
         }
@@ -67,9 +68,9 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
                         .position(new LatLng(p.getLatitud(), p.getLongitud()))
                         .title(lugar.getNombre()).snippet(lugar.getDireccion())
                         .icon(BitmapDescriptorFactory.fromBitmap(icono)));
-                mapa.setOnInfoWindowClickListener(this);
             }
         }
+        mapa.setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -77,9 +78,12 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
         // for (int pos=0; pos<lugares.tamaño(); pos++) {
         for (int pos=0; pos<adaptador.getItemCount(); pos++) {
             if (adaptador.lugarPosicion(pos).getNombre().equals(marker.getTitle())) {
+                Log.d("Nombre", "Nombre: " + adaptador.lugarPosicion(pos).getNombre());
+                Log.d("Titulo", "Titulo: " + marker.getTitle());
             // if (lugares.elemento(pos).getNombre().equals(marker.getTitle())) {
                 Intent intent = new Intent(this, VistaLugarActivity.class);
-                intent.putExtra("pos", pos); startActivity(intent);
+                intent.putExtra("pos", pos);
+                startActivity(intent);
                 break;
             }
         }

@@ -34,19 +34,27 @@ public class EdicionLugarActivity extends AppCompatActivity {
     private EditText url;
     private EditText comentario;
     private Toast msnToast;
+    private int _id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edicion_lugar);
-        Bundle extras = getIntent().getExtras();
-        pos = extras.getInt("pos", 0);
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
-        // lugar = lugares.elemento(pos);
         adaptador = ((Aplicacion) getApplication()).adaptador;
-        lugar = adaptador.lugarPosicion(pos);
-        actualizaVistas();
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        Bundle extras = getIntent().getExtras();
+        // pos = extras.getInt("pos", 0);
+        // lugar = lugares.elemento(pos);
+        pos = extras.getInt("pos", -1);
+        _id= extras.getInt("_id",-1);
+        if (_id != -1) {
+            setTitle("Nuevo lugar");
+            lugar = lugares.elemento(_id);
+        } else {
+            lugar = adaptador.lugarPosicion(pos);
+            actualizaVistas();
+        }
     }
 
     public void actualizaVistas() {
@@ -86,13 +94,15 @@ public class EdicionLugarActivity extends AppCompatActivity {
                 msnToast = Toast.makeText(getApplicationContext(),"Cambios guardados exitosamente",Toast.LENGTH_LONG);
                 msnToast.setGravity(Gravity.CENTER,0,0);
                 msnToast.show();
-                usoLugar.guardar(pos, lugar);
+                if (_id == -1) _id = adaptador.idPosicion(pos);
+                usoLugar.guardar(_id, lugar);
                 finish();
                 return true;
             case R.id.accion_cancelar:
                 msnToast = Toast.makeText(getApplicationContext(),"Canceló la edición no hay cambios",Toast.LENGTH_LONG);
                 msnToast.setGravity(Gravity.CENTER,0,0);
                 msnToast.show();
+                if (_id !=- 1) lugares.borrar(_id);
                 finish();
                 return true;
             default:

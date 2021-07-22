@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
 import com.grupo5.dangerzone.data.LugaresBD;
@@ -63,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Snackbar.make(view, R.string.mensaje_fab,
-                Snackbar.LENGTH_LONG).setAction("Accion",null).show();
+                // Snackbar.make(view, R.string.mensaje_fab,
+                // Snackbar.LENGTH_LONG).setAction("Accion",null).show();
+                usoLugar.nuevo();
             } });
 
         // lugar.toString();

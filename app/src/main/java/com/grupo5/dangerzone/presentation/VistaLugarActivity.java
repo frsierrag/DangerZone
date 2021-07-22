@@ -42,18 +42,23 @@ public class VistaLugarActivity extends AppCompatActivity {
     final static int RESULTADO_EDITAR = 1;
     final static int RESULTADO_GALERIA = 2;
     final static int RESULTADO_FOTO = 3;
+    public int _id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_lugar);
-        Bundle extras = getIntent().getExtras();
-        pos = extras.getInt("pos", 0);
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
         adaptador = ((Aplicacion) getApplication()).adaptador;
-        lugar = adaptador.lugarPosicion(pos);
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        // pos = extras.getInt("pos", 0);
         // lugar = lugares.elemento(pos);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) pos = extras.getInt("pos", 0);
+        else pos = 0;
+        _id = adaptador.idPosicion(pos);
+        lugar = adaptador.lugarPosicion(pos);
+
         foto = findViewById(R.id.foto);
         galeria = findViewById(R.id.galeria);
         camara = findViewById(R.id.camara);
@@ -141,6 +146,8 @@ public class VistaLugarActivity extends AppCompatActivity {
         valoracion.setOnRatingBarChangeListener( new RatingBar.OnRatingBarChangeListener() {
             @Override public void onRatingChanged(RatingBar ratingBar, float valor, boolean fromUser) {
                 lugar.setValoracion(valor);
+                usoLugar.actualizaPosLugar(pos,lugar);
+                pos = adaptador.posicionId(_id);
             }
         });
 
@@ -177,6 +184,8 @@ public class VistaLugarActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULTADO_EDITAR) {
+            lugar = lugares.elemento(_id);
+            pos = adaptador.posicionId(_id);
             actualizaVistas();
             findViewById(R.id.scrollView1).invalidate();
         } else if (requestCode == RESULTADO_GALERIA) {

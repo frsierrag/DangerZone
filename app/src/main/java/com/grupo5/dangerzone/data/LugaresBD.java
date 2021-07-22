@@ -39,26 +39,31 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
                 "comentario TEXT, " +
                 "fecha BIGINT, " +
                 "valoracion REAL)");
+
         db.execSQL("INSERT INTO lugares VALUES (null, " + "'UIS', " +
                 "'Calle 9 # 27, Bucaramanga, Santander', " + "-73.121, 7.1377, " +
                 TipoLugar.EDUCACION.ordinal() + ", '', 6344000, " +
                 "'https://www.uis.edu.co/', " + "'Una de las mejores universidades de Colombia.', " +
                 System.currentTimeMillis() + ", 5.0)");
-        db.execSQL("INSERT INTO lugares VALUES (null, " + "'Estadio Atanasio Girardot', " +
-                "'Cra. 74 # 48010', -75.59013,6.256864, " +
+
+        db.execSQL("INSERT INTO lugares VALUES (null, " + "'Estadio de Fútbol Atanasio Girardot', " +
+                "'Cra. 74 #48010, Medellín, Antioquia', -75.59013,6.256864, " +
                 TipoLugar.DEPORTE.ordinal() + ", '', 0, " +
                 "'http://comunasdemedellin.com/', "+ "'Estadio de la ciudad de medellín', " +
                 System.currentTimeMillis() +", 4.5)");
+
         db.execSQL("INSERT INTO lugares VALUES (null, " + "'Movistar Arena', " +
                 "'Diagonal. 61c #26-36, Bogotá, Cundinamarca'," +  "-74.07695,4.64888," +
                 TipoLugar.ESPECTACULO.ordinal() + ", '', 5470183, " +
                 "'https://movistararena.co/', " + "'Centro de eventos en Bogotá', " +
                 System.currentTimeMillis() + ", 4.0)");
+
         db.execSQL("INSERT INTO lugares VALUES (null, " + "'Páramo de Santurbán', " +
                 "'Silos, Santander'," + "-72.90982,7.2466845, " +
                 TipoLugar.NATURALEZA.ordinal() + ", '', 0, " + "'', " +
                 "'Centro de eventos en Bogotá', " +
                 System.currentTimeMillis() + ", 4.0)");
+
         db.execSQL("INSERT INTO lugares VALUES (null, " + "'Loma Mesa de Ruitoque', " +
                 "'Loma Mesa de Ruitoque, Floridablanca, Santander',0,0, " +
                 TipoLugar.BAR.ordinal() + ", '', 0, " + "'', " +
@@ -86,17 +91,44 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
     @Override
     public void añade(Lugar lugar) { }
 
-    @Override
-    public int nuevo() { return 0; }
+    @Override public int nuevo() {
+        int _id = -1;
+        Lugar lugar = new Lugar();
+        getWritableDatabase().execSQL("INSERT INTO lugares (nombre, " +
+                "direccion, longitud, latitud, tipo, foto, telefono, url, " + "comentario, fecha, valoracion) " +
+                "VALUES ('', '', " + lugar.getPosicion().getLongitud() + ","+ lugar.getPosicion().getLatitud() +
+                ", "+ lugar.getTipo().ordinal()+ ", '', 0, '', '', " + lugar.getFecha() + ", 0)");
+        Cursor c = getReadableDatabase().rawQuery( "SELECT _id FROM lugares WHERE fecha = " +
+                lugar.getFecha(), null);
+        if (c.moveToNext()) _id = c.getInt(0);
+        c.close();
+        return _id;
+    }
 
     @Override
-    public void borrar(int id) { }
+    public void borrar(int id) {
+        getWritableDatabase().execSQL("DELETE FROM lugares WHERE _id = " + id);
+    }
 
     @Override
     public int tamaño() { return 0; }
 
     @Override
-    public void actualiza(int id, Lugar lugar) { }
+    public void actualiza(int id, Lugar lugar) {
+        getWritableDatabase().execSQL("UPDATE lugares SET" +
+                " nombre = '" + lugar.getNombre() +
+                "', direccion = '" + lugar.getDireccion() +
+                "', longitud = " + lugar.getPosicion().getLongitud() +
+                " , latitud = " + lugar.getPosicion().getLatitud() +
+                " , tipo = " + lugar.getTipo().ordinal() +
+                " , foto = '" + lugar.getFoto() +
+                "', telefono = " + lugar.getTelefono() +
+                " , url = '" + lugar.getUrl() +
+                "', comentario = '" + lugar.getComentario() +
+                "', fecha = " + lugar.getFecha() +
+                " , valoracion = " + lugar.getValoracion() +
+                " WHERE _id = " + id);
+    }
 
     public static Lugar extraeLugar(Cursor cursor) {
         Lugar lugar = new Lugar();
@@ -114,9 +146,10 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
     }
 
     public Cursor extraeCursor() {
-        //String consulta = "SELECT * FROM lugares";
+        // String consulta = "SELECT * FROM lugares";
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(contexto);
-        String consulta;
+        String consulta, max;
+        max = pref.getString("maximo", "12");
         switch (pref.getString("orden", "0")) {
             case "0":
                 consulta = "SELECT * FROM lugares ";
@@ -131,7 +164,7 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
                         "(" + lat + "-latitud )*(" + lat + "-latitud )";
                 break;
         }
-        consulta += " LIMIT " + pref.getString("maximo","?");
+        consulta += " LIMIT " + pref.getString("maximo", max);
         SQLiteDatabase bd = getReadableDatabase();
         return bd.rawQuery(consulta, null);
     }

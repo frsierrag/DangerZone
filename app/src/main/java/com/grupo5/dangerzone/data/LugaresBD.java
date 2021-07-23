@@ -84,7 +84,7 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
             Log.d("TAG","error elemnto lugares db exec " + e.getMessage());
             throw e;
         } finally {
-            if (cursor!=null) cursor.close();
+            if (cursor != null) cursor.close();
         }
     }
 

@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.menu_buscar) {
             lanzarVistaLugar(null);
             return true;
-        } if (id == R.id.menu_usuario) {
+        }
+        if (id == R.id.menu_usuario) {
             return true;
         }
         if (id == R.id.menu_mapa) {

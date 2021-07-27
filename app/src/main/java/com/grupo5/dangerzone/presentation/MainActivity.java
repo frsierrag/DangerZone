@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.menu_usuario) {
+            usoActividades.lanzarUsuario();
             return true;
         }
         if (id == R.id.menu_mapa) {

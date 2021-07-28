@@ -17,10 +17,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
+import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.model.GeoPunto;
 import com.grupo5.dangerzone.model.Lugar;
+import com.grupo5.dangerzone.presentation.AdaptadorLugaresBD;
 import com.grupo5.dangerzone.presentation.EdicionLugarActivity;
 import com.grupo5.dangerzone.presentation.VistaLugarActivity;
 
@@ -33,12 +35,19 @@ import java.net.URL;
 public class CasosUsoLugar {
 
     private Activity actividad;
-    private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
+    // private RepositorioLugares lugares;
 
     // Constructor de la clase
-    public CasosUsoLugar(Activity actividad, RepositorioLugares lugares) {
+    /* public CasosUsoLugar(Activity actividad, RepositorioLugares lugares) {
         this.actividad = actividad;
         this.lugares = lugares;
+    } */
+    public CasosUsoLugar(Activity actividad, LugaresBD lugares, AdaptadorLugaresBD adaptador) {
+        this.actividad = actividad;
+        this.lugares = lugares;
+        this.adaptador = adaptador;
     }
 
     // Operaciones básicas
@@ -54,7 +63,10 @@ public class CasosUsoLugar {
                 .setMessage("¿Seguro de eliminar este lugar?")
                 .setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        lugares.borrar(id); actividad.finish();
+                        lugares.borrar(id);
+                        adaptador.setCursor(lugares.extraeCursor());
+                        adaptador.notifyDataSetChanged();
+                        actividad.finish();
                     }})
                 .setNegativeButton(R.string.negative_button, null)
                 .show();
@@ -70,6 +82,22 @@ public class CasosUsoLugar {
     // Guardar
     public void guardar(int id, Lugar nuevoLugar) {
         lugares.actualiza(id,nuevoLugar);
+        adaptador.setCursor(lugares.extraeCursor());
+        adaptador.notifyDataSetChanged();
+    }
+
+    // Nuevo
+    public void nuevo() {
+        int id = lugares.nuevo();
+        GeoPunto posicion = ((Aplicacion) actividad.getApplication()).posicionActual;
+        if (!posicion.equals(GeoPunto.SIN_POSICION)) {
+            Lugar lugar = lugares.elemento(id);
+            lugar.setPosicion(posicion);
+            lugares.actualiza(id, lugar);
+        }
+        Intent nuevo_lugar = new Intent(actividad, EdicionLugarActivity.class);
+        nuevo_lugar.putExtra("_id", id);
+        actividad.startActivity(nuevo_lugar);
     }
 
     // INTENCIONES
@@ -112,9 +140,11 @@ public class CasosUsoLugar {
     }
 
     public void ponerFoto(int pos, String uri, ImageView imageView) {
-        Lugar lugar = lugares.elemento(pos);
+        // Lugar lugar = lugares.elemento(pos);
+        Lugar lugar = adaptador.lugarPosicion(pos);
         lugar.setFoto(uri);
         visualizarFoto(lugar, imageView);
+        actualizaPosLugar(pos, lugar);
     }
 
     public void visualizarFoto(Lugar lugar, ImageView imageView) {
@@ -123,6 +153,11 @@ public class CasosUsoLugar {
         } else {
             imageView.setImageBitmap(null);
         }
+    }
+
+    public void actualizaPosLugar(int pos, Lugar lugar) {
+        int id = adaptador.idPosicion(pos);
+        guardar(id, lugar);
     }
 
     public Uri tomarFoto(int codigoSolicitud) {

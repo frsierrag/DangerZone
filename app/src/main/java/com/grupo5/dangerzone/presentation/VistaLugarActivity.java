@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.grupo5.dangerzone.Aplicacion;
 import com.grupo5.dangerzone.R;
-import com.grupo5.dangerzone.data.RepositorioLugares;
+import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.model.Lugar;
 import com.grupo5.dangerzone.use_cases.CasosUsoLugar;
 
@@ -25,7 +25,9 @@ import java.util.Date;
 
 public class VistaLugarActivity extends AppCompatActivity {
 
-    private RepositorioLugares lugares;
+    // private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
     private Lugar lugar;
@@ -40,16 +42,23 @@ public class VistaLugarActivity extends AppCompatActivity {
     final static int RESULTADO_EDITAR = 1;
     final static int RESULTADO_GALERIA = 2;
     final static int RESULTADO_FOTO = 3;
+    public int _id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_lugar);
-        Bundle extras = getIntent().getExtras();
-        pos = extras.getInt("pos", 0);
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares);
-        lugar = lugares.elemento(pos);
+        adaptador = ((Aplicacion) getApplication()).adaptador;
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        // pos = extras.getInt("pos", 0);
+        // lugar = lugares.elemento(pos);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) pos = extras.getInt("pos", 0);
+        else pos = 0;
+        _id = adaptador.idPosicion(pos);
+        lugar = adaptador.lugarPosicion(pos);
+
         foto = findViewById(R.id.foto);
         galeria = findViewById(R.id.galeria);
         camara = findViewById(R.id.camara);
@@ -137,6 +146,8 @@ public class VistaLugarActivity extends AppCompatActivity {
         valoracion.setOnRatingBarChangeListener( new RatingBar.OnRatingBarChangeListener() {
             @Override public void onRatingChanged(RatingBar ratingBar, float valor, boolean fromUser) {
                 lugar.setValoracion(valor);
+                usoLugar.actualizaPosLugar(pos,lugar);
+                pos = adaptador.posicionId(_id);
             }
         });
 
@@ -162,7 +173,8 @@ public class VistaLugarActivity extends AppCompatActivity {
                 usoLugar.editar(pos,RESULTADO_EDITAR);
                 return true;
             case R.id.accion_borrar:
-                usoLugar.borrar(pos);
+                int id = adaptador.idPosicion(pos);
+                usoLugar.borrar(id);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -172,6 +184,8 @@ public class VistaLugarActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULTADO_EDITAR) {
+            lugar = lugares.elemento(_id);
+            pos = adaptador.posicionId(_id);
             actualizaVistas();
             findViewById(R.id.scrollView1).invalidate();
         } else if (requestCode == RESULTADO_GALERIA) {

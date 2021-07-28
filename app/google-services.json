@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "457133258680",
+    "project_id": "dangerzone-1ec17",
+    "storage_bucket": "dangerzone-1ec17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457133258680:android:1a26823196e78b7c87814d",
+        "android_client_info": {
+          "package_name": "com.grupo5.dangerzone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457133258680-o4nobpef336jfskdnuqij4tvdkjcmj3q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo5.dangerzone",
+            "certificate_hash": "0d3cc02df2a5b427842248bee3329e0bae0f5b0d"
+          }
+        },
+        {
+          "client_id": "457133258680-ummp8in7kq232umar7rdk55qdma28g9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPTe-4sqWiAasCsZhmph15T81rpMdXDGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457133258680-ummp8in7kq232umar7rdk55qdma28g9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

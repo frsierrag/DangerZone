@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.grupo5.dangerzone">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".Aplicacion"
         android:allowBackup="true"
@@ -12,16 +14,6 @@
         android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DangerZone">
-        <activity
-            android:name=".presentation.MainActivity"
-            android:label="DangerZone"
-            android:theme="@style/Theme.DangerZone.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".presentation.AcercaDeActivity"
             android:label="@string/accion_acerca_de"
@@ -33,10 +25,30 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".presentation.LoginActivity"
+            android:theme="@style/Theme.DangerZone.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:label="DangerZone"
+            android:theme="@style/Theme.DangerZone.NoActionBar">
+        </activity>
+        <activity
+            android:name=".presentation.MapaActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="MissingClass" />
+        <activity
             android:name=".presentation.PreferenciasActivity"
-            android:label="Preferencias Mis Lugares"
+            android:label="Preferencias DangerZone"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".presentation.UsuarioActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".presentation.VistaLugarActivity"
             android:label="Vista Lugar"
@@ -51,5 +63,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 </manifest>

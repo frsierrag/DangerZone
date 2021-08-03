@@ -24,6 +24,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.grupo5.dangerzone.R;
+import com.grupo5.dangerzone.data.Usuarios;
 
 public class LoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -100,10 +101,11 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
 
     private void verificaSiUsuarioValidado() {
         if (auth.getCurrentUser() != null) {
+            Usuarios.guardarUsuario(auth.getCurrentUser());
             Intent i = new Intent(this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                    Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
             finish();
         }

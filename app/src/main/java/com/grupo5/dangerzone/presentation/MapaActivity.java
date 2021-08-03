@@ -1,6 +1,5 @@
 package com.grupo5.dangerzone.presentation;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -81,10 +80,12 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("Nombre", "Nombre: " + adaptador.lugarPosicion(pos).getNombre());
                 Log.d("Titulo", "Titulo: " + marker.getTitle());
             // if (lugares.elemento(pos).getNombre().equals(marker.getTitle())) {
+                /*
                 Intent intent = new Intent(this, VistaLugarActivity.class);
                 intent.putExtra("pos", pos);
                 startActivity(intent);
                 break;
+                */
             }
         }
     }

@@ -2,6 +2,8 @@ package com.grupo5.dangerzone;
 
 import android.app.Application;
 
+import com.grupo5.dangerzone.Firebase.LugaresAsinc;
+import com.grupo5.dangerzone.Firebase.LugaresFirestore;
 import com.grupo5.dangerzone.data.LugaresBD;
 import com.grupo5.dangerzone.data.RepositorioLugares;
 import com.grupo5.dangerzone.model.GeoPunto;
@@ -15,10 +17,14 @@ public class Aplicacion extends Application {
     public AdaptadorLugaresBD adaptador;
     public GeoPunto posicionActual = new GeoPunto(0.0, 0.0);
 
+    // FIREBASE
+    public LugaresAsinc lugaresAsinc;
+
     @Override public void onCreate() {
         super.onCreate();
         lugares = new LugaresBD(this);
         adaptador = new AdaptadorLugaresBD(lugares, lugares.extraeCursor());
+        lugaresAsinc = new LugaresFirestore();
     }
 
     // @Override public void onCreate() { super.onCreate(); }

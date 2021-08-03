@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DangerZone">
+        android:theme="@style/Theme.DangerZone"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".presentation.AcercaDeActivity"
             android:label="@string/accion_acerca_de"

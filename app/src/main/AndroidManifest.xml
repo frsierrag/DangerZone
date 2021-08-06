@@ -28,10 +28,12 @@
         <activity
             android:name=".presentation.LoginActivity"
             android:theme="@style/Theme.DangerZone.NoActionBar">
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".presentation.MainActivity"
@@ -46,6 +48,14 @@
             android:name=".presentation.PreferenciasActivity"
             android:label="Preferencias DangerZone"
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".presentation.Splash"
+            android:theme="@style/Theme.DangerZone.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".presentation.UsuarioActivity"

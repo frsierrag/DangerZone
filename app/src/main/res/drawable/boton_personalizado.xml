@@ -11,14 +11,15 @@
         <shape android:shape="rectangle">
             <corners android:radius="25.0dip" />
             <stroke android:width="0.2dip" android:color="@color/teal_200" />
-            <solid android:color="@color/white" />
+            <solid android:color="@color/fire" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="25.0dip" />
-            <stroke android:width="0.2dip" android:color="@color/purple_200" />
-            <solid android:color="@android:color/transparent" />
+            <stroke android:width="0.2dip" android:color="@color/white" />
+            <!--<solid android:color="@android:color/transparent" />-->
+            <solid android:color="@color/red_200" />
         </shape>
     </item>
 </selector>

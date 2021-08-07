@@ -53,6 +53,7 @@ public class AdaptadorLugares extends RecyclerView.Adapter<AdaptadorLugares.View
                 case DEPORTE: id = R.drawable.deporte; break;
                 case NATURALEZA: id = R.drawable.naturaleza; break;
                 case GASOLINERA: id = R.drawable.gasolinera; break;
+                case DANGER: id = R.drawable.danger; break;
             }
             foto.setImageResource(id);
             foto.setScaleType(ImageView.ScaleType.FIT_END);

@@ -35,7 +35,7 @@ public class AdaptadorLugaresFirestore extends FirestoreRecyclerAdapter<Lugar, A
 
     @Override
     protected void onBindViewHolder(AdaptadorLugares.ViewHolder holder, int position, Lugar lugar) {
-        personalizaVista(holder,lugar);
+        personalizaVista(holder, lugar);
         holder.itemView.setOnClickListener(onClickListener);
         holder.itemView.setTag(new Integer(position));
     }
@@ -58,7 +58,7 @@ public class AdaptadorLugaresFirestore extends FirestoreRecyclerAdapter<Lugar, A
     }
 
     // Personalizamos un ViewHolder a partir de un lugar
-    public void personalizaVista(AdaptadorLugares.ViewHolder holder,Lugar lugar) {
+    public void personalizaVista(AdaptadorLugares.ViewHolder holder, Lugar lugar) {
         holder.nombre.setText(lugar.getNombre());
         holder.direccion.setText(lugar.getDireccion());
         int id = R.drawable.otros;
@@ -72,7 +72,9 @@ public class AdaptadorLugaresFirestore extends FirestoreRecyclerAdapter<Lugar, A
             case EDUCACION: id = R.drawable.educacion; break;
             case DEPORTE: id = R.drawable.deporte; break;
             case NATURALEZA: id = R.drawable.naturaleza; break;
-            case GASOLINERA: id = R.drawable.gasolinera; break; }
+            case GASOLINERA: id = R.drawable.gasolinera; break;
+            case DANGER: id = R.drawable.danger; break;
+        }
         holder.foto.setImageResource(id);
         holder.foto.setScaleType(ImageView.ScaleType.FIT_END);
         holder.valoracion.setRating(lugar.getValoracion());

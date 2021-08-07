@@ -22,4 +22,18 @@
     </style>
     <style name="Theme.DangerZone.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.DangerZone.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/custom_rating</item>
+        <item name="android:indeterminateDrawable">@drawable/custom_rating</item>
+        <item name="android:minHeight">15dip</item>
+        <item name="android:maxHeight">60dip</item>
+        <item name="android:scaleX">0.6</item>
+        <item name="android:scaleY">0.6</item>
+        <item name="android:transformPivotX">30dp</item>
+        <item name="android:transformPivotY">10dp</item>
+    </style>
+    <style name="CustomRatingBarStyleSmall" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/custom_rating</item>
+    </style>
 </resources>

@@ -1,6 +1,5 @@
 package com.grupo5.dangerzone.presentation;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -338,6 +337,7 @@ public class VistaLugarActivity extends AppCompatActivity {
         }
     }
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULTADO_EDITAR) {
@@ -360,5 +360,5 @@ public class VistaLugarActivity extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 }

@@ -14,7 +14,8 @@ public enum TipoLugar {
     EDUCACION ("Educación", R.drawable.educacion),
     DEPORTE ("Deporte", R.drawable.deporte),
     NATURALEZA ("Naturaleza", R.drawable.naturaleza),
-    GASOLINERA ("Gasolinera", R.drawable.gasolinera);
+    GASOLINERA ("Gasolinera", R.drawable.gasolinera),
+    DANGER ("Zona Peligrosa", R.drawable.danger);
 
     private final String texto;
     private final int recurso;
